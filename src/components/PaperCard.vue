@@ -1,6 +1,7 @@
 <template lang="pug">
   q-card.paper-card
     img(src='~/assets/paper.jpg' ref="img")
+
     p.subject-symbol-text {{ subjectSymbol }}
     p.subject-number-text {{ subjectNumber }}
     p.subject-theme-text {{ subjectTheme }}
@@ -22,14 +23,16 @@
     div.absolute-top(:style="bgColorStyle")
 
     q-card-actions(align='around')
-      q-btn(flat round color='red', icon='favorite')
-      q-btn(flat round color='teal', icon='bookmark')
-      q-btn(flat round color='primary', icon='share')
+      q-btn(flat round color='primary', icon='edit')
+      q-btn(flat round color='red', icon='delete')
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: [
+    'paperId',
     'completed', // 完了したか
 
     'subjectSymbol', // 科目記号
@@ -57,9 +60,7 @@ export default {
     }
   },
   methods: {
-    hoge () {
-      alert('hoge')
-    }
+    ...mapActions('papers', ['updatePaper'])
   }
 }
 </script>
