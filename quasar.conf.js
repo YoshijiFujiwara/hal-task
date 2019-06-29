@@ -46,10 +46,15 @@ module.exports = function (ctx) {
         'QItemLabel',
 
         // 以下追加
+        'QFooter',
         'QImg',
         'QCard',
         'QCardSection',
-        'QCardActions'
+        'QCardActions',
+        'QTabs',
+        'QTab',
+        'QRouteTab',
+        'QCheckbox'
       ],
 
       directives: [
