@@ -20,18 +20,30 @@
                           :student-number="paper.studentNumber"
                           :my-name="paper.myName"
                           :homeroom-teacher="paper.homeroomTeacher")
+    div.absolute-bottom.text-center.q-mb-lg
+      q-btn(round
+            @click="showAddPaper = true"
+            color="primary"
+            size="24px"
+            icon="add")
+    q-dialog(v-model="showAddPaper")
+      add-paper
+
 </template>
 
-<style>
-</style>
-
 <script>
-import PaperCard from '../components/PaperCard'
+import PaperCard from '../components/Papers/PaperCard'
+import AddPaper from '../components/Papers/Modals/AddPaper'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'PagePapers',
-  components: { PaperCard },
+  data () {
+    return {
+      showAddPaper: false
+    }
+  },
+  components: { PaperCard, AddPaper },
   computed: {
     ...mapGetters('papers', ['allPapers'])
   }
