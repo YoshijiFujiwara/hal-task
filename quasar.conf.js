@@ -56,6 +56,7 @@ module.exports = function (ctx) {
         'QRouteTab',
         'QCheckbox',
         'QDialog',
+        'QSpace',
 
         // spinner
         'QSpinnerAudio',
