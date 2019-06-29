@@ -55,7 +55,28 @@ module.exports = function (ctx) {
         'QTab',
         'QRouteTab',
         'QCheckbox',
-        'QDialog'
+        'QDialog',
+
+        // spinner
+        'QSpinnerAudio',
+        'QSpinnerBall',
+        'QSpinnerBars',
+        'QSpinnerComment',
+        'QSpinnerCube',
+        'QSpinnerDots',
+        'QSpinnerFacebook',
+        'QSpinnerGears',
+        'QSpinnerGrid',
+        'QSpinnerHearts',
+        'QSpinnerHourglass',
+        'QSpinnerInfinity',
+        'QSpinnerIos',
+        'QSpinnerOval',
+        'QSpinnerPie',
+        'QSpinnerPuff',
+        'QSpinnerRadio',
+        'QSpinnerRings',
+        'QSpinnerTail'
       ],
 
       directives: [

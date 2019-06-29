@@ -1,15 +1,44 @@
 <template lang="pug">
-  q-card
-    q-card-section
-      .text-h6 Alert
-    q-card-section
-      | Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
-    q-card-actions(align="right")
-      q-btn(flat label="OK" color="primary" v-close-popup)
+  q-card.paper-card
+    img(src="~/assets/paper.jpg" ref="img")
+    p.new-title
+    q-card-actions(align="around")
+      q-btn(:loading="loading", color="primary", @click="simulateProgress(4)", style="width: 150px")
+        | Button
+        template(v-slot:loading)
+          q-spinner-gears.on-left
+            | Loading...
+
 </template>
 
 <script>
 export default {
-
+  data () {
+    return {
+      loading: false
+    }
+  },
+  methods: {
+    simulateProgress (number) {
+      // we set loading state
+      this.loading = true
+      // simulate a delay
+      setTimeout(() => {
+        // we're done, we reset loading state
+        this.loading = false
+      }, 3000)
+    }
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+  .paper-card {
+    width: 100%;
+    position: relative;
+
+    .new-text {
+
+    }
+  }
+</style>
