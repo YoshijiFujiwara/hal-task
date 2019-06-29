@@ -1,7 +1,6 @@
 export default {
-  papers: [
-    {
-      id: 1,
+  papers: {
+    'ID1': {
       completed: true,
       subjectSymbol: 'JV31',
       subjectNumber: '01',
@@ -18,8 +17,7 @@ export default {
       myName: '藤原きち',
       homeroomTeacher: '川島ひろ'
     },
-    {
-      id: 2,
+    'ID2': {
       completed: true,
       subjectSymbol: 'JV31',
       subjectNumber: '01',
@@ -36,8 +34,7 @@ export default {
       myName: '藤原きち',
       homeroomTeacher: '川島ひろ'
     },
-    {
-      id: 3,
+    'ID3': {
       completed: true,
       subjectSymbol: 'JV31',
       subjectNumber: '01',
@@ -54,8 +51,7 @@ export default {
       myName: '藤原きち',
       homeroomTeacher: '川島ひろ'
     },
-    {
-      id: 4,
+    'ID4': {
       completed: false,
       subjectSymbol: 'JV31',
       subjectNumber: '01',
@@ -72,8 +68,7 @@ export default {
       myName: '藤原きち',
       homeroomTeacher: '川島ひろ'
     },
-    {
-      id: 5,
+    'ID5': {
       completed: true,
       subjectSymbol: 'JV31',
       subjectNumber: '01',
@@ -90,8 +85,7 @@ export default {
       myName: '藤原きち',
       homeroomTeacher: '川島ひろ'
     },
-    {
-      id: 6,
+    'ID6': {
       completed: false,
       subjectSymbol: 'JV31',
       subjectNumber: '01',
@@ -108,5 +102,5 @@ export default {
       myName: '藤原きち',
       homeroomTeacher: '川島ひろ'
     }
-  ]
+  }
 }

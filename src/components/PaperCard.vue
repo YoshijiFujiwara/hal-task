@@ -20,7 +20,7 @@
     p.student-number-text {{ studentNumber }}
     p.my-name-text {{ myName }}
     p.homeroom-teacher-text {{ homeroomTeacher }}
-    div.absolute-top(:style="bgColorStyle")
+    div.absolute-top(v-ripple :style="bgColorStyle" @click="updatePaper({ id: paperId, updates: { completed: !completed }})")
 
     q-card-actions(align='around')
       q-btn(flat round color='primary', icon='edit')

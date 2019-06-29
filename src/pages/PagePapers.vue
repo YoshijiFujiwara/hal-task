@@ -2,9 +2,9 @@
   q-page(padding)
     .q-pa-md
       .row.justify-center
-        paper-card.q-ma-md(v-for="(paper, index) in allPapers"
-                          :key="index"
-                          :paper-id="paper.id"
+        paper-card.q-ma-md(v-for="(paper, key) in allPapers"
+                          :key="key"
+                          :paper-id="key"
                           :completed="paper.completed"
                           :subject-symbol="paper.subjectSymbol"
                           :subject-number="paper.subjectNumber"
