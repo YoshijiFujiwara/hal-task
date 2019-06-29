@@ -20,11 +20,13 @@
     p.student-number-text {{ studentNumber }}
     p.my-name-text {{ myName }}
     p.homeroom-teacher-text {{ homeroomTeacher }}
-    div.absolute-top(v-ripple :style="bgColorStyle" @click="updatePaper({ id: paperId, updates: { completed: !completed }})")
+    div.absolute-top(v-ripple
+                    :style="bgColorStyle"
+                    @click="updatePaper({ id: paperId, updates: { completed: !completed }})")
 
     q-card-actions(align='around')
       q-btn(flat round color='primary', icon='edit')
-      q-btn(flat round color='red', icon='delete')
+      q-btn(flat round color='red', icon='delete' @click="promptToDelete(paperId)")
 </template>
 
 <script>
@@ -60,7 +62,23 @@ export default {
     }
   },
   methods: {
-    ...mapActions('papers', ['updatePaper'])
+    ...mapActions('papers', ['updatePaper', 'deletePaper']),
+    promptToDelete (id) {
+      // confでDiglog指定してから使えるよ
+      this.$q.dialog({
+        title: '確認',
+        message: 'この課題表紙を削除しますか？',
+        ok: {
+          push: true
+        },
+        cancel: {
+          color: 'negative'
+        },
+        persistent: true
+      }).onOk(() => {
+        this.deletePaper(id)
+      })
+    }
   }
 }
 </script>
