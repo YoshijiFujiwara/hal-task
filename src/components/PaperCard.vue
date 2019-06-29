@@ -1,6 +1,6 @@
 <template lang="pug">
   q-card.paper-card
-    img(src='~/assets/paper.jpg')
+    img(src='~/assets/paper.jpg' ref="img")
     p.subject-symbol-text {{ subjectSymbol }}
     p.subject-number-text {{ subjectNumber }}
     p.subject-theme-text {{ subjectTheme }}
@@ -19,42 +19,57 @@
     p.student-number-text {{ studentNumber }}
     p.my-name-text {{ myName }}
     p.homeroom-teacher-text {{ homeroomTeacher }}
+    div.absolute-top(:style="bgColorStyle")
+
     q-card-actions(align='around')
-      q-btn(flat='', round='', color='red', icon='favorite')
-      q-btn(flat='', round='', color='teal', icon='bookmark')
-      q-btn(flat='', round='', color='primary', icon='share')
+      q-btn(flat round color='red', icon='favorite')
+      q-btn(flat round color='teal', icon='bookmark')
+      q-btn(flat round color='primary', icon='share')
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      subjectSymbol: 'JV11', // 科目記号
-      subjectNumber: '01', // 課題ナンバー
-      subjectTheme: '受講レポート', // 課題主題
-      deliveryYear: '2019', // 納期（年）
-      deliveryMonth: '11', // 納期（月）
-      deliveryDate: '10', // 納期（日）
-      subjectTeacher: '山田忠明', // 科目担当
+  props: [
+    'completed', // 完了したか
 
-      classSymbol: 'IH13A905', // クラス記号
-      attendanceNumber: '15', // 出席番号
-      optionClassSymbol: 'IH22A922', // 選択クラス記号
-      optionAttendanceNumber: '22', // 出席番号
+    'subjectSymbol', // 科目記号
+    'subjectNumber', // 課題ナンバー
+    'subjectTheme', // 課題主題
+    'deliveryYear', // 納期（年）
+    'deliveryMonth', // 納期（月）
+    'deliveryDate', // 納期（日）
+    'subjectTeacher', // 科目担当
 
-      studentNumber: '70145', // 学籍番号
-      myName: '藤原吉司', // 氏名
-      homeroomTeacher: '川島智弘' // 担任
+    'classSymbol', // クラス記号
+    'attendanceNumber', // 出席番号
+    'optionClassSymbol', // 選択クラス記号
+    'optionAttendanceNumber', // 出席番号
+
+    'studentNumber', // 学籍番号
+    'myName', // 氏名
+    'homeroomTeacher' // 担任
+  ],
+  computed: {
+    bgColorStyle () {
+      let style = `height: 427px;`
+      style += this.completed ? 'background-color: rgba(51, 255, 100, 0.2);' : 'background-color: rgba(255, 147, 51, 0.2)'
+      return style
+    }
+  },
+  methods: {
+    hoge () {
+      alert('hoge')
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  $maxWidth: 600px;
+  $maxWidth: 300px;
 
   .paper-card {
     width: 100%;
+    min-width: $maxWidth;
     max-width: $maxWidth;
     position: relative;
     font-size: $maxWidth / 20;
