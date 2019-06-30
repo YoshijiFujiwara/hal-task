@@ -57,6 +57,7 @@ module.exports = function (ctx) {
         'QCheckbox',
         'QDialog',
         'QSpace',
+        'QInput',
 
         // spinner
         'QSpinnerAudio',

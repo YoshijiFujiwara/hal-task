@@ -20,7 +20,7 @@
     p.student-number-text {{ studentNumber }}
     p.my-name-text {{ myName }}
     p.homeroom-teacher-text {{ homeroomTeacher }}
-    div.absolute-top(v-ripple
+    div.absolute-top.overlay(v-ripple
                     :style="bgColorStyle"
                     @click="updatePaper({ id: paperId, updates: { completed: !completed }})")
 
@@ -56,8 +56,7 @@ export default {
   ],
   computed: {
     bgColorStyle () {
-      let style = `height: 427px;`
-      style += this.completed ? 'background-color: rgba(51, 255, 100, 0.2);' : 'background-color: rgba(255, 147, 51, 0.2)'
+      const style = this.completed ? 'background-color: rgba(51, 255, 100, 0.2);' : 'background-color: rgba(255, 147, 51, 0.2)'
       return style
     }
   },
@@ -84,118 +83,90 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  $maxWidth: 300px;
+  @mixin absoluteText($maxWidth: 0px, $topRatio: 1, $leftRatio: 1, $letterSpacingRatio: false) {
+    position: absolute;
+    top: $maxWidth * $topRatio;
+    left: $maxWidth * $leftRatio;
+    @if $letterSpacingRatio != false and $letterSpacingRatio != true {
+      letter-spacing: $maxWidth * $letterSpacingRatio;
+    } @else if $letterSpacingRatio == true {
+      letter-spacing: $maxWidth / 40;
+    }
+  }
 
-  .paper-card {
-    width: 100%;
-    min-width: $maxWidth;
-    max-width: $maxWidth;
-    position: relative;
-    font-size: $maxWidth / 20;
+  @mixin stylesWithMaxWidth($maxWidth: 300px) {
+    .paper-card {
+      width: 100%;
+      min-width: $maxWidth;
+      max-width: $maxWidth;
+      position: relative;
+      font-size: $maxWidth / 20;
 
-    .subject-symbol-text {
-      position: absolute;
-      top: $maxWidth * (156 / 600);
-      left: $maxWidth * 0.205;
-      letter-spacing: $maxWidth / 40;
+      .overlay {
+        height: $maxWidth * (1644 / 1156) // 画像の縦横比率で調整する
+      }
+
+      .subject-symbol-text {
+        @include absoluteText($maxWidth, 156/600, 0.205, true)
+      }
+      .subject-number-text {
+        @include absoluteText($maxWidth, 158/600, 0.527, true)
+      }
+      .subject-theme-text {
+        @include absoluteText($maxWidth, 212/600, 0.205, false)
+      }
+      .delivery-year-text {
+        @include absoluteText($maxWidth, 267/600, 0.205, true)
+      }
+      .delivery-month-text {
+        @include absoluteText($maxWidth, 267/600, 285/600, true)
+      }
+      .delivery-date-text {
+        @include absoluteText($maxWidth, 267/600, 382/600, true)
+      }
+      .subject-teacher-text {
+        @include absoluteText($maxWidth, 315/600, 0.205, false)
+      }
+      .class-symbol-text-1 {
+        @include absoluteText($maxWidth, 394/600, 127/600, 1/35)
+      }
+      .class-symbol-text-2 {
+        @include absoluteText($maxWidth, 394/600, 205/600, 1/40.5)
+      }
+      .class-symbol-text-3 {
+        @include absoluteText($maxWidth, 394/600, 316/600, true)
+      }
+      .attendance-number-text {
+        @include absoluteText($maxWidth, 394/600, 499/600, true)
+      }
+      .option-class-symbol-text-1 {
+        @include absoluteText($maxWidth, 442/600, 127/600, 1/35)
+      }
+      .option-class-symbol-text-2 {
+        @include absoluteText($maxWidth, 442/600, 205/600, 1/40.5)
+      }
+      .option-class-symbol-text-3 {
+        @include absoluteText($maxWidth, 442/600, 316/600, true)
+      }
+      .option-attendance-number-text {
+        @include absoluteText($maxWidth, 442/600, 499/600, true)
+      }
+      .student-number-text {
+        @include absoluteText($maxWidth, 491/600, 122/600, 1/38)
+      }
+      .my-name-text {
+        @include absoluteText($maxWidth, 491/600, 358/600, false)
+      }
+      .homeroom-teacher-text {
+        @include absoluteText($maxWidth, 540/600, 122/600, false)
+      }
     }
-    .subject-number-text {
-      position: absolute;
-      top: $maxWidth * (158 / 600);
-      left: $maxWidth * 0.527;
-      letter-spacing: $maxWidth / 40;
-    }
-    .subject-theme-text {
-      position: absolute;
-      top: $maxWidth * (212 / 600);
-      left: $maxWidth * 0.205;
-    }
-    .delivery-year-text {
-      position: absolute;
-      top: $maxWidth * (267 / 600);
-      left: $maxWidth * 0.205;
-      letter-spacing: $maxWidth / 40;
-    }
-    .delivery-month-text {
-      position: absolute;
-      top: $maxWidth * (267 / 600);
-      left: $maxWidth * (285 / 600);
-      letter-spacing: $maxWidth / 40;
-    }
-    .delivery-date-text {
-      position: absolute;
-      top: $maxWidth * (267 / 600);
-      left: $maxWidth * (382 / 600);
-      letter-spacing: $maxWidth / 40;
-    }
-    .subject-teacher-text {
-      position: absolute;
-      top: $maxWidth * (315 / 600);
-      left: $maxWidth * 0.205;
-    }
-    .class-symbol-text-1 {
-      position: absolute;
-      top: $maxWidth * (394 / 600);
-      left: $maxWidth * (127 / 600);
-      letter-spacing: $maxWidth / 35;
-    }
-    .class-symbol-text-2 {
-      position: absolute;
-      top: $maxWidth * (394 / 600);
-      left: $maxWidth * (205 / 600);
-      letter-spacing: $maxWidth / 40.5;
-    }
-    .class-symbol-text-3 {
-      position: absolute;
-      top: $maxWidth * (394 / 600);
-      left: $maxWidth * (316 / 600);
-      letter-spacing: $maxWidth / 40;
-    }
-    .attendance-number-text {
-      position: absolute;
-      top: $maxWidth * (394 / 600);
-      left: $maxWidth * (499 / 600);
-      letter-spacing: $maxWidth / 40;
-    }
-    .option-class-symbol-text-1 {
-      position: absolute;
-      top: $maxWidth * (442 / 600);
-      left: $maxWidth * (127 / 600);
-      letter-spacing: $maxWidth / 35;
-    }
-    .option-class-symbol-text-2 {
-      position: absolute;
-      top: $maxWidth * (442 / 600);
-      left: $maxWidth * (205 / 600);
-      letter-spacing: $maxWidth / 40.5;
-    }
-    .option-class-symbol-text-3 {
-      position: absolute;
-      top: $maxWidth * (442 / 600);
-      left: $maxWidth * (316 / 600);
-      letter-spacing: $maxWidth / 40;
-    }
-    .option-attendance-number-text {
-      position: absolute;
-      top: $maxWidth * (442 / 600);
-      left: $maxWidth * (499 / 600);
-      letter-spacing: $maxWidth / 40;
-    }
-    .student-number-text {
-      position: absolute;
-      top: $maxWidth * (491 / 600);
-      left: $maxWidth * (122 / 600);
-      letter-spacing: $maxWidth / 38;
-    }
-    .my-name-text {
-      position: absolute;
-      top: $maxWidth * (491 / 600);
-      left: $maxWidth * (358 / 600);
-    }
-    .homeroom-teacher-text {
-      position: absolute;
-      top: $maxWidth * (540 / 600);
-      left: $maxWidth * (122 / 600);
-    }
+  }
+
+  @media screen and (min-width: 620px) {
+    @include stylesWithMaxWidth(400px)
+  }
+  @media screen and (max-width: 619px) {
+    @include stylesWithMaxWidth(300px)
   }
 </style>
