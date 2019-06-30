@@ -1,15 +1,14 @@
 <template lang="pug">
   q-card.paper-card
-    q-card-actions.row.paper-top-actions
-      p.title-text {{ addModalTitle }}
-      q-space
-      q-btn(flat round dense icon="close" color="black" v-close-popup)
+    modal-header(:add-modal-title="addModalTitle"
+                  title-text-class="title-text"
+                  paper-top-actions-class="paper-top-actions")
     img(src="~/assets/add-paper.jpg" ref="img")
-
     div
       input.subject-symbol-input(ref="subjectSymbol"
                                   placeholder="HL11"
-                                  v-model="paperToSubmit.subjectSymbol")
+                                  v-model="paperToSubmit.subjectSymbol"
+                                  autofocus)
       input.subject-number-input(ref="subjectNumber"
                                   type="tel"
                                   maxlength="2"
@@ -84,7 +83,12 @@
 
 <script>
 import { mapActions } from 'vuex'
+import ModalHeader from './Shared/ModalHeader'
+
 export default {
+  components: {
+    ModalHeader
+  },
   data () {
     return {
       loading: false,
