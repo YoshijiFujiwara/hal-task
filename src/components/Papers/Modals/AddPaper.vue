@@ -6,27 +6,75 @@
       q-btn(flat round dense icon="close" color="black" v-close-popup)
     img(src="~/assets/add-paper.jpg" ref="img")
 
-    input.subject-symbol-input(placeholder="hogehoge" v-model="paperToSubmit.subjectSymbol")
-    input.subject-number-input(type="tel" maxlength="2" placeholder="hogehoge" v-model="paperToSubmit.subjectNumber")
-    input.subject-theme-input(placeholder="hogehoge" v-model="paperToSubmit.subjectTheme")
-    input.delivery-year-input(placeholder="hogehoge" v-model="paperToSubmit.deliveryYear")
-    input.delivery-month-input(placeholder="hogehoge" v-model="paperToSubmit.deliveryMonth")
-    input.delivery-date-input(placeholder="hogehoge" v-model="paperToSubmit.deliveryDate")
-    input.subject-teacher-input(placeholder="hogehoge" v-model="paperToSubmit.subjectTeacher")
-    input.class-symbol-input-1(placeholder="hogehoge" v-model="paperToSubmit.classSymbol1")
-    input.class-symbol-input-2(placeholder="hogehoge" v-model="paperToSubmit.classSymbol2")
-    input.class-symbol-input-3(placeholder="hogehoge" v-model="paperToSubmit.classSymbol3")
-    input.attendance-number-input(placeholder="hogehoge" v-model="paperToSubmit.attendanceNumber")
-    input.option-class-symbol-input-1(placeholder="hogehoge" v-model="paperToSubmit.optionClassSymbol1")
-    input.option-class-symbol-input-2(placeholder="hogehoge" v-model="paperToSubmit.optionClassSymbol2")
-    input.option-class-symbol-input-3(placeholder="hogehoge" v-model="paperToSubmit.optionClassSymbol3")
-    input.option-attendance-number-input(placeholder="hogehoge" v-model="paperToSubmit.optionAttendanceNumber")
-    input.student-number-input(placeholder="hogehoge" v-model="paperToSubmit.studentNumber")
-    input.my-name-input(placeholder="hogehoge" v-model="paperToSubmit.myName")
-    input.homeroom-teacher-input(placeholder="hogehoge" v-model="paperToSubmit.homeroomTeacher")
+    form
+      input.subject-symbol-input(ref="subjectSymbol"
+                                  placeholder="HL11"
+                                  v-model="paperToSubmit.subjectSymbol")
+      input.subject-number-input(ref="subjectNumber"
+                                  type="tel"
+                                  maxlength="2"
+                                  placeholder="01"
+                                  v-model="paperToSubmit.subjectNumber")
+      input.subject-theme-input(ref="subjectTheme"
+                                placeholder="受講レポート"
+                                v-model="paperToSubmit.subjectTheme")
+      q-input.delivery-date-input(ref="deliveryDate"
+                                  square
+                                  outlined
+                                  v-model="paperToSubmit.deliveryDate")
+        template(v-slot:append)
+          q-icon.cursor-pointer(name="event")
+            q-popup-proxy
+              q-date(v-model="paperToSubmit.deliveryDate")
+      input.subject-teacher-input(ref="subjectTeacher"
+                                  placeholder="田中太郎"
+                                  v-model="paperToSubmit.subjectTeacher")
+      input.class-symbol-input-1(ref="classSymbol1"
+                                  placeholder="HL"
+                                  v-model="paperToSubmit.classSymbol1")
+      input.class-symbol-input-2(ref="classSymbol2"
+                                  placeholder="11A"
+                                  v-model="paperToSubmit.classSymbol2")
+      input.class-symbol-input-3(ref="classSymbol3"
+                                  type="tel"
+                                  maxlength="3"
+                                  placeholder="999"
+                                  v-model="paperToSubmit.classSymbol3")
+      input.attendance-number-input(ref="attendanceNumber"
+                                    type="tel"
+                                    maxlength="2"
+                                    placeholder="01"
+                                    v-model="paperToSubmit.attendanceNumber")
+      input.option-class-symbol-input-1(ref="optionClassSymbol1"
+                                        placeholder="HA"
+                                        v-model="paperToSubmit.optionClassSymbol1")
+      input.option-class-symbol-input-2(ref="optionClassSymbol2"
+                                        placeholder="11B"
+                                        v-model="paperToSubmit.optionClassSymbol2")
+      input.option-class-symbol-input-3(ref="optionClassSymbol3"
+                                        type="tel"
+                                        maxlength="3"
+                                        placeholder="999"
+                                        v-model="paperToSubmit.optionClassSymbol3")
+      input.option-attendance-number-input(ref="optionAttendanceNumber"
+                                            type="tel"
+                                            maxlength="2"
+                                            placeholder="02"
+                                            v-model="paperToSubmit.optionAttendanceNumber")
+      input.student-number-input(ref="studentNumber"
+                                  type="tel"
+                                  maxlength="5"
+                                  placeholder="99999"
+                                  v-model="paperToSubmit.studentNumber")
+      input.my-name-input(ref="myName"
+                          placeholder="山田二郎"
+                          v-model="paperToSubmit.myName")
+      input.homeroom-teacher-input(ref="homeroomTeacher"
+                                    placeholder="佐藤三郎"
+                                    v-model="paperToSubmit.homeroomTeacher")
 
     q-card-actions(align="around")
-      q-btn(:loading="loading", color="primary", @click="simulateProgress(4)", style="width: 150px")
+      q-btn(ref="submitButton" :loading="loading", color="primary", @click="simulateProgress(4)", style="width: 150px")
         | Button
         template(v-slot:loading)
           q-spinner-gears.on-left
@@ -41,13 +89,39 @@ export default {
       loading: false,
       imgWidth: 0,
 
+      // 数字は、文字入力が完了した判定に使う。１文字でも入力されていればOKなものは0
+      // 選択クラス記号は、入力しない事が多いので、飛ばします
+      refsData: {
+        subjectSymbol: 3,
+        subjectNumber: 1,
+        subjectTheme: 0,
+        deliveryDate: 0,
+        subjectTeacher: 0,
+        classSymbol1: 1,
+        classSymbol2: 2,
+        classSymbol3: 2,
+        attendanceNumber: 1,
+        studentNumber: 4,
+        myName: 0,
+        homeroomTeacher: 0
+      },
+
+      // 選択クラス記号の場合
+      refsDataOption: {
+        optionClassSymbol1: 1,
+        optionClassSymbol2: 2,
+        optionClassSymbol3: 2,
+        optionAttendanceNumber: 1,
+        studentNumber: 4,
+        myName: 0,
+        homeroomTeacher: 0
+      },
+
       paperToSubmit: {
         completed: false,
         subjectSymbol: '',
         subjectNumber: '',
         subjectTheme: '',
-        deliveryYear: '',
-        deliveryMonth: '',
         deliveryDate: '',
         subjectTeacher: '',
         classSymbol1: '',
@@ -77,46 +151,76 @@ export default {
   watch: {
     // 全角入力を半角入力に変化する処理
     'paperToSubmit.subjectSymbol': function (value, oldValue) {
-      this.paperToSubmit.subjectSymbol = this.convertToHalf(value)
+      // 小文字を大文字に変換した上で処理
+      this.paperToSubmit.subjectSymbol = this.convertToHalf(value.toUpperCase())
+      if (this.paperToSubmit.subjectSymbol.length > 3) {
+        this.nextFocus('subjectSymbol', this.refsData)
+      }
     },
     'paperToSubmit.subjectNumber': function (value, oldValue) {
       this.paperToSubmit.subjectNumber = this.convertToHalf(value)
-    },
-    'paperToSubmit.deliveryYear': function (value, oldValue) {
-      this.paperToSubmit.deliveryYear = this.convertToHalf(value)
-    },
-    'paperToSubmit.deliveryMonth': function (value, oldValue) {
-      this.paperToSubmit.deliveryMonth = this.convertToHalf(value)
+      if (this.paperToSubmit.subjectNumber.length > 1) {
+        this.nextFocus('subjectNumber', this.refsData)
+      }
     },
     'paperToSubmit.deliveryDate': function (value, oldValue) {
-      this.paperToSubmit.deliveryDate = this.convertToHalf(value)
+      if (this.paperToSubmit.deliveryDate.length > 9) {
+        this.nextFocus('deliveryDate', this.refsData)
+      }
     },
     'paperToSubmit.classSymbol1': function (value, oldValue) {
-      this.paperToSubmit.classSymbol1 = this.convertToHalf(value)
+      this.paperToSubmit.classSymbol1 = this.convertToHalf(value.toUpperCase())
+      if (this.paperToSubmit.classSymbol1.length > 1) {
+        this.nextFocus('classSymbol1', this.refsData)
+      }
     },
     'paperToSubmit.classSymbol2': function (value, oldValue) {
-      this.paperToSubmit.classSymbol2 = this.convertToHalf(value)
+      this.paperToSubmit.classSymbol2 = this.convertToHalf(value.toUpperCase())
+      if (this.paperToSubmit.classSymbol2.length > 2) {
+        this.nextFocus('classSymbol2', this.refsData)
+      }
     },
     'paperToSubmit.classSymbol3': function (value, oldValue) {
       this.paperToSubmit.classSymbol3 = this.convertToHalf(value)
+      if (this.paperToSubmit.classSymbol3.length > 2) {
+        this.nextFocus('classSymbol3', this.refsData)
+      }
     },
     'paperToSubmit.attendanceNumber': function (value, oldValue) {
       this.paperToSubmit.attendanceNumber = this.convertToHalf(value)
+      if (this.paperToSubmit.attendanceNumber.length > 1) {
+        this.nextFocus('attendanceNumber', this.refsData)
+      }
     },
     'paperToSubmit.optionClassSymbol1': function (value, oldValue) {
-      this.paperToSubmit.optionClassSymbol1 = this.convertToHalf(value)
+      this.paperToSubmit.optionClassSymbol1 = this.convertToHalf(value.toUpperCase())
+      if (this.paperToSubmit.optionClassSymbol1.length > 1) {
+        this.nextFocus('optionClassSymbol1', this.refsDataOption)
+      }
     },
     'paperToSubmit.optionClassSymbol2': function (value, oldValue) {
-      this.paperToSubmit.optionClassSymbol2 = this.convertToHalf(value)
+      this.paperToSubmit.optionClassSymbol2 = this.convertToHalf(value.toUpperCase())
+      if (this.paperToSubmit.optionClassSymbol2.length > 2) {
+        this.nextFocus('optionClassSymbol2', this.refsDataOption)
+      }
     },
     'paperToSubmit.optionClassSymbol3': function (value, oldValue) {
       this.paperToSubmit.optionClassSymbol3 = this.convertToHalf(value)
+      if (this.paperToSubmit.optionClassSymbol3.length > 2) {
+        this.nextFocus('optionClassSymbol3', this.refsDataOption)
+      }
     },
     'paperToSubmit.optionAttendanceNumber': function (value, oldValue) {
       this.paperToSubmit.optionAttendanceNumber = this.convertToHalf(value)
+      if (this.paperToSubmit.optionAttendanceNumber.length > 1) {
+        this.nextFocus('optionAttendanceNumber', this.refsDataOption)
+      }
     },
     'paperToSubmit.studentNumber': function (value, oldValue) {
       this.paperToSubmit.studentNumber = this.convertToHalf(value)
+      if (this.paperToSubmit.studentNumber.length > 4) {
+        this.nextFocus('studentNumber', this.refsData)
+      }
     }
   },
   methods: {
@@ -130,15 +234,32 @@ export default {
       }, 3000)
     },
     shuffleTitle () {
-      this.addModalTitle = this.addModalTitleData[Math.floor(Math.random() * this.addModalTitleData.length)]
+      const randomKey = Math.floor(Math.random() * this.addModalTitleData.length)
+      this.addModalTitle = this.addModalTitleData[randomKey]
     },
     // 全角入力を半角文字に直す
     convertToHalf (value) {
-      return value.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) { return String.fromCharCode(s.charCodeAt(0) - 65248) })
+      return value.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
+        return String.fromCharCode(s.charCodeAt(0) - 65248)
+      })
     },
     // 半角入力を全角文字に直す
     convertToDouble (value) {
-      return value.replace(/[A-Za-z0-9]/g, function (s) { return String.fromCharCode(s.charCodeAt(0) + 65248) })
+      return value.replace(/[A-Za-z0-9]/g, function (s) {
+        return String.fromCharCode(s.charCodeAt(0) + 65248)
+      })
+    },
+    // 次のフォーカス対象を探す
+    nextFocus (currentKey, refsData) {
+      const keys = Object.keys(refsData)
+      // 現在フォーカスされているinput以降から探す
+      const currentIndex = keys.indexOf(currentKey)
+      for (let i = currentIndex + 1; i < keys.length; i++) {
+        if (this.paperToSubmit[keys[i]].length <= refsData[keys[i]]) {
+          this.$refs[keys[i]].focus()
+          break
+        }
+      }
     }
   },
   mounted () {
@@ -149,99 +270,121 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  input {
-    background: transparent;
+input {
+  background: transparent;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  opacity: 0.5; /* Firefox */
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  opacity: 0.5;
+}
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  opacity: 0.5;
+}
+
+@mixin absoluteInput(
+  $maxWidth: 0px,
+  $topRatio: 1,
+  $leftRatio: 1,
+  $letterSpacingRatio: false,
+  $inputHeightRatio: 40/600,
+  $inputWidthRatio: 100/600,
+  $paddingLeftRatio: 10/600
+) {
+  position: absolute;
+  top: $maxWidth * $topRatio;
+  left: $maxWidth * $leftRatio;
+  height: $maxWidth * $inputHeightRatio;
+  width: $maxWidth * $inputWidthRatio;
+  border: none;
+  padding-left: $maxWidth * $paddingLeftRatio;
+
+  @if $letterSpacingRatio != false and $letterSpacingRatio != true {
+    letter-spacing: $maxWidth * $letterSpacingRatio;
+  } @else if $letterSpacingRatio == true {
+    letter-spacing: $maxWidth / 40;
   }
+}
 
-  @mixin absoluteInput($maxWidth: 0px, $topRatio: 1, $leftRatio: 1, $letterSpacingRatio: false, $inputHeightRatio: 40/600, $inputWidthRatio: 100/600, $paddingLeftRatio: 13/600) {
-    position: absolute;
-    top: $maxWidth * $topRatio;
-    left: $maxWidth * $leftRatio;
-    height: $maxWidth * $inputHeightRatio;
-    width: $maxWidth * $inputWidthRatio;
-    border: none;
-    padding-left: $maxWidth * $paddingLeftRatio;
+@mixin stylesWithMaxWidth($maxWidth: 300px) {
+  .paper-card {
+    width: 100%;
+    min-width: $maxWidth;
+    max-width: $maxWidth;
+    position: relative;
+    font-size: $maxWidth / 20;
 
-    @if $letterSpacingRatio != false and $letterSpacingRatio != true {
-      letter-spacing: $maxWidth * $letterSpacingRatio;
-    } @else if $letterSpacingRatio == true {
-      letter-spacing: $maxWidth / 40;
+    .paper-top-actions {
+      height: $maxWidth * (77 / 600);
+    }
+
+    .subject-symbol-input {
+      @include absoluteInput($maxWidth, 82/600, 0.15, 1/33, 38/600, 150/600);
+    }
+    .subject-number-input {
+      @include absoluteInput($maxWidth, 82/600, 0.522, 1/38, 38/600, 75/600);
+    }
+    .subject-theme-input {
+      @include absoluteInput($maxWidth, 138/600, 0.15, false, 55/600, 504/600);
+    }
+    .delivery-date-input {
+      @include absoluteInput($maxWidth, 210/600, 0.134, true, 38/600, 200/600);
+    }
+    .subject-teacher-input {
+      @include absoluteInput($maxWidth, 265/600, 0.15, false, 38/600, 240/600);
+    }
+    .class-symbol-input-1 {
+      @include absoluteInput($maxWidth, 355/600, 0.15, 1/33, 38/600, 75/600);
+    }
+    .class-symbol-input-2 {
+      @include absoluteInput($maxWidth, 355/600, 0.305, 1/30, 38/600, 112/600);
+    }
+    .class-symbol-input-3 {
+      @include absoluteInput($maxWidth, 355/600, 0.52, 1/30, 38/600, 112/600);
+    }
+    .attendance-number-input {
+      @include absoluteInput($maxWidth, 355/600, 520/600, 1/30, 38/600, 75/600);
+    }
+    .option-class-symbol-input-1 {
+      @include absoluteInput($maxWidth, 410/600, 0.15, 1/33, 38/600, 75/600);
+    }
+    .option-class-symbol-input-2 {
+      @include absoluteInput($maxWidth, 410/600, 0.305, 1/30, 38/600, 112/600);
+    }
+    .option-class-symbol-input-3 {
+      @include absoluteInput($maxWidth, 410/600, 0.52, 1/30, 38/600, 112/600);
+    }
+    .option-attendance-number-input {
+      @include absoluteInput($maxWidth, 410/600, 520/600, 1/30, 38/600, 75/600);
+    }
+    .student-number-input {
+      @include absoluteInput($maxWidth, 466/600, 0.15, 1/29, 38/600, 187/600);
+    }
+    .my-name-input {
+      @include absoluteInput(
+        $maxWidth,
+        466/600,
+        355/600,
+        false,
+        38/600,
+        239/600
+      );
+    }
+    .homeroom-teacher-input {
+      @include absoluteInput($maxWidth, 522/600, 0.15, false, 38/600, 240/600);
     }
   }
+}
 
-  @mixin stylesWithMaxWidth($maxWidth: 300px) {
-    .paper-card {
-      width: 100%;
-      min-width: $maxWidth;
-      max-width: $maxWidth;
-      position: relative;
-      font-size: $maxWidth / 20;
-
-      .paper-top-actions {
-        height: $maxWidth * (77 / 600);
-      }
-
-      .subject-symbol-input {
-        @include absoluteInput($maxWidth, 82/600, 0.15, true, 38/600, 150/600)
-      }
-      .subject-number-input {
-        @include absoluteInput($maxWidth, 82/600, 0.522, true, 38/600, 75/600)
-      }
-      .subject-theme-input {
-        @include absoluteInput($maxWidth, 138/600, 0.15, false, 55/600, 504/600)
-      }
-      .delivery-year-input {
-        @include absoluteInput($maxWidth, 210/600, 0.15, true, 38/600, 150/600)
-      }
-      .delivery-month-input {
-        @include absoluteInput($maxWidth, 210/600, 276/600, true, 38/600, 75/600)
-      }
-      .delivery-date-input {
-        @include absoluteInput($maxWidth, 210/600, 388/600, true, 38/600, 75/600)
-      }
-      .subject-teacher-input {
-        @include absoluteInput($maxWidth, 265/600, 0.15, false, 38/600, 240/600)
-      }
-      .class-symbol-input-1 {
-        @include absoluteInput($maxWidth, 355/600, 0.15, 1/35, 38/600, 75/600)
-      }
-      .class-symbol-input-2 {
-        @include absoluteInput($maxWidth, 355/600, 0.305, 1/40.5, 38/600, 112/600)
-      }
-      .class-symbol-input-3 {
-        @include absoluteInput($maxWidth, 355/600, 0.52, 1/35, 38/600, 112/600)
-      }
-      .attendance-number-input {
-        @include absoluteInput($maxWidth, 355/600, 520/600, true, 38/600, 75/600)
-      }
-      .option-class-symbol-input-1 {
-        @include absoluteInput($maxWidth, 410/600, 0.15, 1/35, 38/600, 75/600)
-      }
-      .option-class-symbol-input-2 {
-        @include absoluteInput($maxWidth, 410/600, 0.305, 1/40.5, 38/600, 112/600)
-      }
-      .option-class-symbol-input-3 {
-        @include absoluteInput($maxWidth, 410/600, 0.52, 1/35, 38/600, 112/600)
-      }
-      .option-attendance-number-input {
-        @include absoluteInput($maxWidth, 410/600, 520/600, true, 38/600, 75/600)
-      }
-      .student-number-input {
-        @include absoluteInput($maxWidth, 466/600, 0.15, 1/38, 38/600, 187/600)
-      }
-      .my-name-input {
-        @include absoluteInput($maxWidth, 466/600, 355/600, false, 38/600, 239/600)
-      }
-      .homeroom-teacher-input {
-        @include absoluteInput($maxWidth, 522/600, 0.15, false, 38/600, 240/600)
-      }
-    }
-  }
-
-  @media screen and (min-width: 620px) {
-    @include stylesWithMaxWidth(600px)
-  }
-  @media screen and (max-width: 619px) {
-    @include stylesWithMaxWidth(400px)
-  }
+@media screen and (min-width: 620px) {
+  @include stylesWithMaxWidth(600px);
+}
+@media screen and (max-width: 619px) {
+  @include stylesWithMaxWidth(400px);
+}
 </style>
