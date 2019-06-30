@@ -6,7 +6,7 @@
       q-btn(flat round dense icon="close" color="black" v-close-popup)
     img(src="~/assets/add-paper.jpg" ref="img")
 
-    form
+    div
       input.subject-symbol-input(ref="subjectSymbol"
                                   placeholder="HL11"
                                   v-model="paperToSubmit.subjectSymbol")
@@ -72,10 +72,10 @@
       input.homeroom-teacher-input(ref="homeroomTeacher"
                                     placeholder="佐藤三郎"
                                     v-model="paperToSubmit.homeroomTeacher")
-
+    q-input(label="課題の仕様などをメモ" v-model="paperToSubmit.memo" filled type="textarea")
     q-card-actions(align="around")
-      q-btn(ref="submitButton" :loading="loading", color="primary", @click="simulateProgress(4)", style="width: 150px")
-        | Button
+      q-btn(ref="submitButton" @click="submitForm" :loading="loading", color="primary" style="width: 150px")
+        | 作成
         template(v-slot:loading)
           q-spinner-gears.on-left
             | Loading...
@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
@@ -134,7 +135,8 @@ export default {
         optionAttendanceNumber: '',
         studentNumber: '',
         myName: '',
-        homeroomTeacher: ''
+        homeroomTeacher: '',
+        memo: ''
       },
 
       addModalTitle: '課題を追加する',
@@ -224,6 +226,16 @@ export default {
     }
   },
   methods: {
+    ...mapActions('papers', ['addPaper']),
+    submitForm () {
+      console.log('hogehoge')
+      if (this.paperToSubmit.subjectSymbol.length === 0) {
+        alert('科目記号だけは、入力してください')
+      } else {
+        this.addPaper(this.paperToSubmit)
+        this.$emit('close')
+      }
+    },
     simulateProgress (number) {
       // we set loading state
       this.loading = true

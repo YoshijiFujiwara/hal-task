@@ -1,5 +1,9 @@
 import Vue from 'vue'
 
+export const addPaper = (state, payload) => {
+  Vue.set(state.papers, payload.id, payload.paper)
+}
+
 export const updatePaper = (state, payload) => {
   Object.assign(state.papers[payload.id], payload.updates)
 }

@@ -5,17 +5,17 @@
     p.subject-symbol-text {{ subjectSymbol }}
     p.subject-number-text {{ subjectNumber }}
     p.subject-theme-text {{ subjectTheme }}
-    p.delivery-year-text {{ deliveryYear }}
-    p.delivery-month-text {{ deliveryMonth }}
-    p.delivery-date-text {{ deliveryDate }}
+    p.delivery-year-text {{ deliveryDate.split('/')[0] }}
+    p.delivery-month-text {{ deliveryDate.split('/')[1] }}
+    p.delivery-date-text {{ deliveryDate.split('/')[2] }}
     p.subject-teacher-text {{ subjectTeacher }}
-    p.class-symbol-text-1 {{ classSymbol.substr(0, 2) }}
-    p.class-symbol-text-2 {{ classSymbol.substr(2, 3) }}
-    p.class-symbol-text-3 {{ classSymbol.substr(5, 3) }}
+    p.class-symbol-text-1 {{ classSymbol1 }}
+    p.class-symbol-text-2 {{ classSymbol2 }}
+    p.class-symbol-text-3 {{ classSymbol3 }}
     p.attendance-number-text {{ attendanceNumber }}
-    p.option-class-symbol-text-1 {{ optionClassSymbol.substr(0, 2) }}
-    p.option-class-symbol-text-2 {{ optionClassSymbol.substr(2, 3) }}
-    p.option-class-symbol-text-3 {{ optionClassSymbol.substr(5, 3) }}
+    p.option-class-symbol-text-1 {{ optionClassSymbol1 }}
+    p.option-class-symbol-text-2 {{ optionClassSymbol2 }}
+    p.option-class-symbol-text-3 {{ optionClassSymbol3 }}
     p.option-attendance-number-text {{ optionAttendanceNumber }}
     p.student-number-text {{ studentNumber }}
     p.my-name-text {{ myName }}
@@ -40,14 +40,16 @@ export default {
     'subjectSymbol', // 科目記号
     'subjectNumber', // 課題ナンバー
     'subjectTheme', // 課題主題
-    'deliveryYear', // 納期（年）
-    'deliveryMonth', // 納期（月）
     'deliveryDate', // 納期（日）
     'subjectTeacher', // 科目担当
 
-    'classSymbol', // クラス記号
+    'classSymbol1', // クラス記号
+    'classSymbol2', // クラス記号
+    'classSymbol3', // クラス記号
     'attendanceNumber', // 出席番号
-    'optionClassSymbol', // 選択クラス記号
+    'optionClassSymbol1', // 選択クラス記号
+    'optionClassSymbol2', // 選択クラス記号
+    'optionClassSymbol3', // 選択クラス記号
     'optionAttendanceNumber', // 出席番号
 
     'studentNumber', // 学籍番号

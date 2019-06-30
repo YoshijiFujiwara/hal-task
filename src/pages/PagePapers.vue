@@ -10,19 +10,21 @@
                             :subject-symbol="paper.subjectSymbol"
                             :subject-number="paper.subjectNumber"
                             :subject-theme="paper.subjectTheme"
-                            :delivery-year="paper.deliveryDate"
-                            :delivery-month="paper.deliveryMonth"
                             :delivery-date="paper.deliveryDate"
                             :subject-teacher="paper.subjectTeacher"
-                            :class-symbol="paper.classSymbol"
+                            :class-symbol1="paper.classSymbol1"
+                            :class-symbol2="paper.classSymbol2"
+                            :class-symbol3="paper.classSymbol3"
                             :attendance-number="paper.attendanceNumber"
-                            :option-class-symbol="paper.optionClassSymbol"
+                            :option-class-symbol1="paper.optionClassSymbol1"
+                            :option-class-symbol2="paper.optionClassSymbol2"
+                            :option-class-symbol3="paper.optionClassSymbol3s"
                             :option-attendance-number="paper.optionAttendanceNumber"
                             :student-number="paper.studentNumber"
                             :my-name="paper.myName"
                             :homeroom-teacher="paper.homeroomTeacher")
       q-dialog(v-model="showAddPaper")
-        add-paper
+        add-paper(@close="showAddPaper = false")
     div.floating-action-button
       q-btn(round
         @click="showAddPaper = true"
