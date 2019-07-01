@@ -2,7 +2,6 @@ import { uid } from 'quasar'
 
 export const addPaper = ({ commit }, paper) => {
   const uniqueId = uid()
-  paper.completed = false // 初期値はfalse
   const payload = {
     id: uniqueId,
     paper

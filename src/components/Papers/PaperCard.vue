@@ -1,31 +1,32 @@
 <template lang="pug">
   q-card.paper-card
     img(src='~/assets/paper.jpg' ref="img")
+    p {{ paper.completed }}
 
-    p.subject-symbol-text {{ subjectSymbol }}
-    p.subject-number-text {{ subjectNumber }}
-    p.subject-theme-text {{ subjectTheme }}
-    p.delivery-year-text {{ deliveryDate.split('/')[0] }}
-    p.delivery-month-text {{ deliveryDate.split('/')[1] }}
-    p.delivery-date-text {{ deliveryDate.split('/')[2] }}
-    p.subject-teacher-text {{ subjectTeacher }}
-    p.class-symbol-text-1 {{ classSymbol1 }}
-    p.class-symbol-text-2 {{ classSymbol2 }}
-    p.class-symbol-text-3 {{ classSymbol3 }}
-    p.attendance-number-text {{ attendanceNumber }}
-    p.option-class-symbol-text-1 {{ optionClassSymbol1 }}
-    p.option-class-symbol-text-2 {{ optionClassSymbol2 }}
-    p.option-class-symbol-text-3 {{ optionClassSymbol3 }}
-    p.option-attendance-number-text {{ optionAttendanceNumber }}
-    p.student-number-text {{ studentNumber }}
-    p.my-name-text {{ myName }}
-    p.homeroom-teacher-text {{ homeroomTeacher }}
+    p.subject-symbol-text {{ paper.subjectSymbol }}
+    p.subject-number-text {{ paper.subjectNumber }}
+    p.subject-theme-text {{ paper.subjectTheme }}
+    p.delivery-year-text {{ paper.deliveryDate.split('/')[0] }}
+    p.delivery-month-text {{ paper.deliveryDate.split('/')[1] }}
+    p.delivery-date-text {{ paper.deliveryDate.split('/')[2] }}
+    p.subject-teacher-text {{ paper.subjectTeacher }}
+    p.class-symbol-text-1 {{ paper.classSymbol1 }}
+    p.class-symbol-text-2 {{ paper.classSymbol2 }}
+    p.class-symbol-text-3 {{ paper.classSymbol3 }}
+    p.attendance-number-text {{ paper.attendanceNumber }}
+    p.option-class-symbol-text-1 {{ paper.optionClassSymbol1 }}
+    p.option-class-symbol-text-2 {{ paper.optionClassSymbol2 }}
+    p.option-class-symbol-text-3 {{ paper.optionClassSymbol3 }}
+    p.option-attendance-number-text {{ paper.optionAttendanceNumber }}
+    p.student-number-text {{ paper.studentNumber }}
+    p.my-name-text {{ paper.myName }}
+    p.homeroom-teacher-text {{ paper.homeroomTeacher }}
     div.absolute-top.overlay(v-ripple
                     :style="bgColorStyle"
-                    @click="updatePaper({ id: paperId, updates: { completed: !completed }})")
+                    @click="updatePaper({ id: paperId, updates: { completed: !paper.completed }})")
 
     q-card-actions(align='around')
-      q-btn(flat round color='primary', icon='edit')
+      q-btn(flat round color='primary', icon='edit' @click="showEditTask = true")
       q-btn(flat round color='red', icon='delete' @click="promptToDelete(paperId)")
 </template>
 
@@ -35,30 +36,11 @@ import { mapActions } from 'vuex'
 export default {
   props: [
     'paperId',
-    'completed', // 完了したか
-
-    'subjectSymbol', // 科目記号
-    'subjectNumber', // 課題ナンバー
-    'subjectTheme', // 課題主題
-    'deliveryDate', // 納期（日）
-    'subjectTeacher', // 科目担当
-
-    'classSymbol1', // クラス記号
-    'classSymbol2', // クラス記号
-    'classSymbol3', // クラス記号
-    'attendanceNumber', // 出席番号
-    'optionClassSymbol1', // 選択クラス記号
-    'optionClassSymbol2', // 選択クラス記号
-    'optionClassSymbol3', // 選択クラス記号
-    'optionAttendanceNumber', // 出席番号
-
-    'studentNumber', // 学籍番号
-    'myName', // 氏名
-    'homeroomTeacher' // 担任
+    'paper'
   ],
   computed: {
     bgColorStyle () {
-      const style = this.completed ? 'background-color: rgba(51, 255, 100, 0.2);' : 'background-color: rgba(255, 147, 51, 0.2)'
+      const style = this.paper.completed ? 'background-color: rgba(51, 255, 100, 0.2);' : 'background-color: rgba(255, 147, 51, 0.2)'
       return style
     }
   },

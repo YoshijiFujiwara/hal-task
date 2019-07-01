@@ -1,28 +1,12 @@
 <template lang="pug">
-  div
+  div(v-if="renderComponent")
     q-page(padding)
       .q-pa-md
         .row.justify-center
-          paper-card.q-ma-md(v-for="(paper, key) in allPapers"
-                            :key="key"
+          paper-card.q-ma-md(v-for="(paper, key, index) in allPapers"
+                            :key="index"
                             :paper-id="key"
-                            :completed="paper.completed"
-                            :subject-symbol="paper.subjectSymbol"
-                            :subject-number="paper.subjectNumber"
-                            :subject-theme="paper.subjectTheme"
-                            :delivery-date="paper.deliveryDate"
-                            :subject-teacher="paper.subjectTeacher"
-                            :class-symbol1="paper.classSymbol1"
-                            :class-symbol2="paper.classSymbol2"
-                            :class-symbol3="paper.classSymbol3"
-                            :attendance-number="paper.attendanceNumber"
-                            :option-class-symbol1="paper.optionClassSymbol1"
-                            :option-class-symbol2="paper.optionClassSymbol2"
-                            :option-class-symbol3="paper.optionClassSymbol3s"
-                            :option-attendance-number="paper.optionAttendanceNumber"
-                            :student-number="paper.studentNumber"
-                            :my-name="paper.myName"
-                            :homeroom-teacher="paper.homeroomTeacher")
+                            :paper="paper")
       q-dialog(v-model="showAddPaper")
         add-paper(@close="showAddPaper = false")
     div.floating-action-button
@@ -31,7 +15,6 @@
         color="primary"
         size="24px"
         icon="add")
-
 </template>
 
 <script>
@@ -41,12 +24,13 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'PagePapers',
+  components: { PaperCard, AddPaper },
   data () {
     return {
-      showAddPaper: false
+      showAddPaper: false,
+      renderComponent: true // 強制的にコンポーネントをレンダーするのに使用
     }
   },
-  components: { PaperCard, AddPaper },
   computed: {
     ...mapGetters('papers', ['allPapers'])
   }
