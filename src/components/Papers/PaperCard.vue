@@ -1,7 +1,6 @@
 <template lang="pug">
   q-card.paper-card
     img(src='~/assets/paper.jpg' ref="img")
-    p {{ paper.completed }}
 
     p.subject-symbol-text {{ paper.subjectSymbol }}
     p.subject-number-text {{ paper.subjectNumber }}
@@ -24,9 +23,8 @@
     div.absolute-top.overlay(v-ripple
                     :style="bgColorStyle"
                     @click="updatePaper({ id: paperId, updates: { completed: !paper.completed }})")
-
     q-card-actions(align='around')
-      q-btn(flat round color='primary', icon='edit' @click="showEditTask = true")
+      q-btn(flat round color='primary', icon='edit' @click="$emit('showEditPaper', { paperId })")
       q-btn(flat round color='red', icon='delete' @click="promptToDelete(paperId)")
 </template>
 
@@ -40,8 +38,7 @@ export default {
   ],
   computed: {
     bgColorStyle () {
-      const style = this.paper.completed ? 'background-color: rgba(51, 255, 100, 0.2);' : 'background-color: rgba(255, 147, 51, 0.2)'
-      return style
+      return this.paper.completed ? 'background-color: rgba(51, 255, 100, 0.2);' : 'background-color: rgba(255, 147, 51, 0.2)'
     }
   },
   methods: {

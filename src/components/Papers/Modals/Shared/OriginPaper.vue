@@ -92,7 +92,7 @@
       type="textarea")
     q-card-actions(align="around")
       q-btn(ref="submitButton" @click="submitAction" :loading="loading", color="primary" style="width: 150px")
-        | 作成
+        | {{ buttonTitle }}
         template(v-slot:loading)
           q-spinner-gears.on-left
             | Loading...
@@ -119,6 +119,14 @@ export default {
     pressSubmitButtonAction: {
       type: String,
       required: true
+    },
+    buttonTitle: {
+      type: String,
+      required: true
+    },
+    paperId: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -262,12 +270,12 @@ export default {
     })
   },
   methods: {
-    ...mapActions('papers', ['addPaper']),
+    ...mapActions('papers', ['addPaper', 'updatePaper']),
     submitAction () {
       if (this.pressSubmitButtonAction === 'addPaper') {
         this.addPaperSubmitAction()
       } else if (this.pressSubmitButtonAction === 'updatePaper') {
-        // this.updatePaper()
+        this.updatePaperSubmitAction()
       }
     },
     addPaperSubmitAction () {
@@ -277,6 +285,10 @@ export default {
         this.addPaper(this.paperToSubmit)
         this.$emit('close')
       }
+    },
+    updatePaperSubmitAction () {
+      this.updatePaper({ id: this.paperId, updates: this.paperToSubmit })
+      this.$emit('close')
     },
     simulateProgress (number) {
       // we set loading state

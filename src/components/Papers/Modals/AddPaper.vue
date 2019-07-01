@@ -1,5 +1,6 @@
 <template lang="pug">
-  origin-paper(:preset="paperToSubmit"
+  origin-paper(button-title="作成"
+                :preset="paperToSubmit"
                 :modal-title-data="addModalTitleData"
                 press-submit-button-action="addPaper"
                 @close="$emit('close')")

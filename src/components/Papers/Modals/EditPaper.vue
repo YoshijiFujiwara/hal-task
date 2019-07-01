@@ -1,8 +1,10 @@
 <template lang="pug">
-  origin-paper(:preset="paper"
+  origin-paper(button-title="更新"
+                :preset="paper"
                 :modal-title-data="editModalTitleData"
                 press-submit-button-action="updatePaper"
-                @close="$emit('close')")
+                @close="$emit('close')"
+                :paper-id="paperId")
 </template>
 
 <script>
@@ -16,6 +18,10 @@ export default {
     paper: {
       type: Object,
       required: true
+    },
+    paperId: {
+      type: String,
+      default: ''
     }
   },
   data () {
