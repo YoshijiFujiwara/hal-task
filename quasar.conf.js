@@ -58,6 +58,7 @@ module.exports = function (ctx) {
         'QDialog',
         'QSpace',
         'QInput',
+        'QBanner',
 
         'QDate',
         'QPopupProxy',
