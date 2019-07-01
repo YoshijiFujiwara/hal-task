@@ -1,6 +1,8 @@
 <template lang="pug">
   div
     q-page(padding)
+      div.row.q-mb-lg
+        search
       .q-pa-md
         // todo課題
         div(v-if="Object.keys(allPapersToDo).length")
@@ -11,7 +13,8 @@
                               :paper-id="key"
                               :paper="paper"
                               @showEditPaper="showEditModal($event.paperId)")
-        no-papers(v-else)
+        // todoがないとき
+        no-papers(v-else-if="!search")
         // 完了課題
         div.q-mt-lg(v-if="Object.keys(allPapersCompleted).length")
           list-banner.corner-round(title="完了" bg-class="bg-green-4")
@@ -21,6 +24,9 @@
                               :paper-id="key"
                               :paper="paper"
                               @showEditPaper="showEditModal($event.paperId)")
+        // 検索結果がないとき
+        p(v-if="search && !Object.keys(allPapersToDo).length && !Object.keys(allPapersCompleted).length")
+          | 検索結果  なし
       q-dialog(v-model="showAddPaper")
         add-paper(@close="showAddPaper = false")
     div.floating-action-button
@@ -41,11 +47,12 @@ import AddPaper from '../components/Papers/Modals/AddPaper'
 import EditPaper from '../components/Papers/Modals/EditPaper'
 import ListBanner from '../components/Shared/ListBanner'
 import NoPapers from '../components/Papers/NoPapers'
-import { mapGetters } from 'vuex'
+import Search from '../components/Papers/Tools/Search'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'PagePapers',
-  components: { PaperCard, AddPaper, EditPaper, ListBanner, NoPapers },
+  components: { PaperCard, AddPaper, EditPaper, ListBanner, NoPapers, Search },
   data () {
     return {
       showAddPaper: false,
@@ -55,6 +62,7 @@ export default {
   },
   computed: {
     ...mapGetters('papers', ['allPapersToDo', 'allPapersCompleted']),
+    ...mapState('papers', ['search']),
     editingPaper () {
       if (this.editingPaperId !== '') {
         return this.allPapersToDo[this.editingPaperId]

@@ -11,3 +11,7 @@ export const updatePaper = (state, payload) => {
 export const deletePaper = (state, id) => {
   Vue.delete(state.papers, id)
 }
+
+export const setSearch = (state, value) => {
+  state.search = value
+}

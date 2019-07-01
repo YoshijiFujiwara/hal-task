@@ -16,3 +16,7 @@ export const updatePaper = ({ commit }, payload) => {
 export const deletePaper = ({ commit }, id) => {
   commit('deletePaper', id)
 }
+
+export const setSearch = ({ commit }, value) => {
+  commit('setSearch', value)
+}

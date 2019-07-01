@@ -100,5 +100,6 @@ export default {
       homeroomTeacher: '佐藤二郎',
       memo: 'hogehoge'
     }
-  }
+  },
+  search: ''
 }
