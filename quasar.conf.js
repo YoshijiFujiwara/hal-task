@@ -62,6 +62,7 @@ module.exports = function (ctx) {
 
         'QDate',
         'QPopupProxy',
+        'QSelect',
 
         // spinner
         'QSpinnerAudio',

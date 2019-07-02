@@ -15,3 +15,7 @@ export const deletePaper = (state, id) => {
 export const setSearch = (state, value) => {
   state.search = value
 }
+
+export const setSort = (state, value) => {
+  state.sort = value
+}

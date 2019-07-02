@@ -3,6 +3,7 @@
     q-page(padding)
       div.row.q-mb-lg
         search
+        sort
       .q-pa-md
         // todo課題
         div(v-if="Object.keys(allPapersToDo).length")
@@ -48,11 +49,12 @@ import EditPaper from '../components/Papers/Modals/EditPaper'
 import ListBanner from '../components/Shared/ListBanner'
 import NoPapers from '../components/Papers/NoPapers'
 import Search from '../components/Papers/Tools/Search'
+import Sort from '../components/Papers/Tools/Sort'
 import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'PagePapers',
-  components: { PaperCard, AddPaper, EditPaper, ListBanner, NoPapers, Search },
+  components: { PaperCard, AddPaper, EditPaper, ListBanner, NoPapers, Search, Sort },
   data () {
     return {
       showAddPaper: false,

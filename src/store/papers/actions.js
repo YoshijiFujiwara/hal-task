@@ -20,3 +20,7 @@ export const deletePaper = ({ commit }, id) => {
 export const setSearch = ({ commit }, value) => {
   commit('setSearch', value)
 }
+
+export const setSort = ({ commit }, value) => {
+  commit('setSort', value)
+}

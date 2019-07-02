@@ -2,10 +2,10 @@ export default {
   papers: {
     'ID1': {
       completed: true,
-      subjectSymbol: 'JV31',
-      subjectNumber: '01',
+      subjectSymbol: 'AA31',
+      subjectNumber: '09',
       subjectTheme: 'きほん',
-      deliveryDate: '2019/11/10',
+      deliveryDate: '2019/04/20',
       subjectTeacher: '山田太郎',
       classSymbol1: 'IH',
       classSymbol2: '13A',
@@ -22,10 +22,10 @@ export default {
     },
     'ID2': {
       completed: true,
-      subjectSymbol: 'JV31',
-      subjectNumber: '02',
+      subjectSymbol: 'AB31',
+      subjectNumber: '08',
       subjectTheme: 'きほん',
-      deliveryDate: '2019/11/10',
+      deliveryDate: '2019/03/10',
       subjectTeacher: '山田太郎',
       classSymbol1: 'IH',
       classSymbol2: '13A',
@@ -42,10 +42,10 @@ export default {
     },
     'ID3': {
       completed: true,
-      subjectSymbol: 'JV31',
+      subjectSymbol: 'AC31',
       subjectNumber: '03',
       subjectTheme: 'きほん',
-      deliveryDate: '2019/11/10',
+      deliveryDate: '2019/11/01',
       subjectTeacher: '山田太郎',
       classSymbol1: 'IH',
       classSymbol2: '13A',
@@ -62,10 +62,10 @@ export default {
     },
     'ID4': {
       completed: false,
-      subjectSymbol: 'JV31',
+      subjectSymbol: 'AD31',
       subjectNumber: '04',
       subjectTheme: 'きほん',
-      deliveryDate: '2019/11/10',
+      deliveryDate: '2018/03/10',
       subjectTeacher: '山田太郎',
       classSymbol1: 'IH',
       classSymbol2: '13A',
@@ -82,10 +82,10 @@ export default {
     },
     'ID5': {
       completed: true,
-      subjectSymbol: 'JV31',
-      subjectNumber: '05',
+      subjectSymbol: 'AE31',
+      subjectNumber: '01',
       subjectTheme: 'きほん',
-      deliveryDate: '2019/11/10',
+      deliveryDate: '2019/12/10',
       subjectTeacher: '山田太郎',
       classSymbol1: 'IH',
       classSymbol2: '13A',
@@ -101,5 +101,6 @@ export default {
       memo: 'hogehoge'
     }
   },
-  search: ''
+  search: '',
+  sort: 'subjectSymbol'
 }
