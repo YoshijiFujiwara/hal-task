@@ -67,7 +67,11 @@ export default {
     ...mapState('papers', ['search']),
     editingPaper () {
       if (this.editingPaperId !== '') {
-        return this.allPapersToDo[this.editingPaperId]
+        if (this.allPapersToDo[this.editingPaperId] !== undefined) {
+          return this.allPapersToDo[this.editingPaperId]
+        } else {
+          return this.allPapersCompleted[this.editingPaperId]
+        }
       } else {
         return null
       }

@@ -8,6 +8,7 @@
       input(class="subject-symbol-input"
         ref="subjectSymbol"
         placeholder="HL11"
+        :autofocus="autoFocusInput === 'subject-symbol-input'"
         v-model="paperToSubmit.subjectSymbol")
       input(class="subject-number-input"
         ref="subjectNumber"
@@ -18,6 +19,8 @@
       input(class="subject-theme-input"
         ref="subjectTheme"
         placeholder="受講レポート"
+        :autofocus="autoFocusInput === 'subject-theme-input'"
+        v-select-all
         v-model="paperToSubmit.subjectTheme")
       q-input(class="delivery-date-input"
         ref="deliveryDate"
@@ -127,6 +130,21 @@ export default {
     paperId: {
       type: String,
       default: ''
+    },
+    autoFocusInput: {
+      type: String,
+      default: 'subject-symbol-input'
+    }
+  },
+  directives: {
+    selectAll: {
+      inserted (el) {
+        el.addEventListener('focus', () => {
+          if (el.value.length) {
+            el.select()
+          }
+        })
+      }
     }
   },
   data () {
@@ -266,7 +284,9 @@ export default {
 
     // 送信内容をpropsのpresetで初期化する
     Object.keys(this.preset).forEach(key => {
-      this.paperToSubmit[key] = this.preset[key]
+      if (key !== 'completed') {
+        this.paperToSubmit[key] = this.preset[key]
+      }
     })
   },
   methods: {

@@ -4,6 +4,7 @@
                 :modal-title-data="editModalTitleData"
                 press-submit-button-action="updatePaper"
                 @close="$emit('close')"
+                auto-focus-input="subject-theme-input"
                 :paper-id="paperId")
 </template>
 
