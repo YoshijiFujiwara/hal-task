@@ -1,6 +1,7 @@
 <template lang="pug">
   q-input(outlined
           v-model="searchField"
+          @keyup.esc="searchField = ''"
           class="col"
           v-select-all
           label='検索')
