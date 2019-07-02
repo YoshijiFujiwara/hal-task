@@ -2,6 +2,7 @@
   q-input(outlined
           v-model="searchField"
           class="col"
+          v-select-all
           label='検索')
     template(v-slot:append='')
       q-icon.cursor-pointer(v-if="searchField !== ''"
@@ -12,8 +13,12 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { selectAll } from '../../../directives/directive-select-all'
 
 export default {
+  directives: {
+    selectAll
+  },
   computed: {
     ...mapState('papers', ['search']),
     // この書き方知らなかった

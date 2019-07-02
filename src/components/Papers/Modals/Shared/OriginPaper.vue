@@ -104,6 +104,7 @@
 
 <script>
 import ModalHeader from '../Shared/ModalHeader'
+import { selectAll } from '../../../../directives/directive-select-all'
 import { mapActions } from 'vuex'
 
 export default {
@@ -137,15 +138,7 @@ export default {
     }
   },
   directives: {
-    selectAll: {
-      inserted (el) {
-        el.addEventListener('focus', () => {
-          if (el.value.length) {
-            el.select()
-          }
-        })
-      }
-    }
+    selectAll
   },
   data () {
     return {
