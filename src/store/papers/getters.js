@@ -32,6 +32,7 @@ export const papersFiltered = (state, getters) => {
       if (paper.subjectSymbol.toLowerCase().includes(searchLowerCase) ||
           paper.subjectNumber.toLowerCase().includes(searchLowerCase) ||
           paper.subjectTheme.toLowerCase().includes(searchLowerCase) ||
+          paper.deliveryDate.toLowerCase().includes(searchLowerCase) ||
           paper.subjectTeacher.toLowerCase().includes(searchLowerCase) ||
           paper.homeroomTeacher.toLowerCase().includes(searchLowerCase) ||
           paper.memo.toLowerCase().includes(searchLowerCase)) {

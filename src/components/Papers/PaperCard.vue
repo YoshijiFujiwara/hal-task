@@ -2,13 +2,13 @@
   q-card.paper-card
     img(src='~/assets/paper.jpg' ref="img")
 
-    p.subject-symbol-text {{ paper.subjectSymbol }}
-    p.subject-number-text {{ paper.subjectNumber }}
-    p.subject-theme-text {{ paper.subjectTheme }}
-    p.delivery-year-text {{ paper.deliveryDate.split('/')[0] }}
-    p.delivery-month-text {{ paper.deliveryDate.split('/')[1] }}
-    p.delivery-date-text {{ paper.deliveryDate.split('/')[2] }}
-    p.subject-teacher-text {{ paper.subjectTeacher }}
+    p.subject-symbol-text(v-html="$options.filters.searchHighLight(paper.subjectSymbol, search)")
+    p.subject-number-text(v-html="$options.filters.searchHighLight(paper.subjectNumber, search)")
+    p.subject-theme-text(v-html="$options.filters.searchHighLight(paper.subjectTheme, search)")
+    p.delivery-year-text(v-html="$options.filters.searchHighLight(paper.deliveryDate.split('/')[0], search)")
+    p.delivery-month-text(v-html="$options.filters.searchHighLight(paper.deliveryDate.split('/')[1], search)")
+    p.delivery-date-text(v-html="$options.filters.searchHighLight(paper.deliveryDate.split('/')[2], search)")
+    p.subject-teacher-text(v-html="$options.filters.searchHighLight(paper.subjectTeacher, search)")
     p.class-symbol-text-1 {{ paper.classSymbol1 }}
     p.class-symbol-text-2 {{ paper.classSymbol2 }}
     p.class-symbol-text-3 {{ paper.classSymbol3 }}
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   props: [
@@ -37,8 +37,20 @@ export default {
     'paper'
   ],
   computed: {
+    ...mapState('papers', ['search']),
     bgColorStyle () {
       return this.paper.completed ? 'background-color: rgba(51, 255, 100, 0.2);' : 'background-color: rgba(255, 147, 51, 0.2)'
+    }
+  },
+  filters: {
+    searchHighLight (value, search) {
+      if (search) {
+        let searchRegExp = new RegExp(search, 'ig')
+        return value.replace(searchRegExp, (match) => {
+          return '<span class="bg-blue-3">' + match + '</span>'
+        })
+      }
+      return value
     }
   },
   methods: {
