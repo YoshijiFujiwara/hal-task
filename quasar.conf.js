@@ -59,11 +59,13 @@ module.exports = function (ctx) {
         'QSpace',
         'QInput',
         'QBanner',
+        'QSeparator',
 
         'QDate',
         'QPopupProxy',
         'QSelect',
         'QScrollArea',
+        'QToggle',
 
         // spinner
         'QSpinnerAudio',

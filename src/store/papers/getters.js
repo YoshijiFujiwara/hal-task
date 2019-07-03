@@ -1,3 +1,7 @@
+export const allPapers = (state, getters) => {
+  return getters.papersFiltered
+}
+
 export const allPapersToDo = (state, getters) => {
   const papersFiltered = getters.papersFiltered
   let getPapers = {}

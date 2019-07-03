@@ -23,7 +23,7 @@
       p.student-number-text {{ paper.studentNumber }}
       p.my-name-text {{ paper.myName }}
       p.homeroom-teacher-text {{ paper.homeroomTeacher }}
-      div.absolute-top.overlay(v-ripple
+      div.absolute-top.overlay.cursor-pointer(v-ripple
                       :style="bgColorStyle"
                       @click="updatePaper({ id: paperId, updates: { completed: !paper.completed }})")
       q-card-actions(align='around')

@@ -7,45 +7,65 @@
       .q-pa-md
         // TODO 高さをレスポンシブにする
         q-scroll-area(style="height: 750px;")
-          // todo課題
-          div(v-if="Object.keys(allPapersToDo).length")
-            transition(appear
-                      enter-active-class="animated zoomIn"
-                      leave-active-class="animated zoomOut")
-              div
-                list-banner.corner-round(title="TODO" bg-class="bg-orange-5")
+          // まとめて表示する場合
+          div(v-if="settings.showPapersInOneList")
+            // 全ての課題
+            div(v-if="Object.keys(allPapers).length")
+              transition(appear
+                          enter-active-class="animated zoomIn"
+                          leave-active-class="animated zoomOut")
                 .row.justify-center
-                  paper-card.q-ma-md(v-for="(paper, key, index) in allPapersToDo"
-                                  :key="index"
-                                  :paper-id="key"
-                                  :paper="paper"
-                                  @showEditPaper="showEditModal($event.paperId)")
-          // todoがないとき
-          no-papers(v-else-if="!search")
-          // 完了課題
-          div.q-mt-lg(v-if="Object.keys(allPapersCompleted).length")
-            transition(appear
-                        enter-active-class="animated zoomIn"
-                        leave-active-class="animated zoomOut")
-              div
-                list-banner.corner-round(title="完了" bg-class="bg-green-4")
-                .row.justify-center
-                  paper-card.q-ma-md(v-for="(paper, key, index) in allPapersCompleted"
-                                    :key="index"
-                                    :paper-id="key"
-                                    :paper="paper"
-                                    @showEditPaper="showEditModal($event.paperId)")
-          // 検索結果がないとき
-          p(v-if="search && !Object.keys(allPapersToDo).length && !Object.keys(allPapersCompleted).length")
-            | 検索結果  なし
+                  paper-card.q-ma-md(v-for="(paper, key, index) in allPapers"
+                    :key="index"
+                    :paper-id="key"
+                    :paper="paper"
+                    @showEditPaper="showEditModal($event.paperId)")
+            // 検索結果がないとき
+            p(v-if="search && !Object.keys(allPapers).length")
+              | 検索結果  なし
+          // まとめて表示しない場合
+          div(v-else)
+            // todo課題
+            div(v-if="Object.keys(allPapersToDo).length")
+              transition(appear
+              enter-active-class="animated zoomIn"
+                leave-active-class="animated zoomOut")
+                div
+                  list-banner.corner-round(title="TODO"
+                    bg-class="bg-orange-5")
+                  .row.justify-center
+                    paper-card.q-ma-md(v-for="(paper, key, index) in allPapersToDo"
+                      :key="index"
+                      :paper-id="key"
+                      :paper="paper"
+                      @showEditPaper="showEditModal($event.paperId)")
+            // todoがないとき
+            no-papers(v-else-if="!search")
+            // 完了課題
+            div.q-mt-lg(v-if="Object.keys(allPapersCompleted).length")
+              transition(appear
+              enter-active-class="animated zoomIn"
+                leave-active-class="animated zoomOut")
+                div
+                  list-banner.corner-round(title="完了"
+                    bg-class="bg-green-4")
+                  .row.justify-center
+                    paper-card.q-ma-md(v-for="(paper, key, index) in allPapersCompleted"
+                      :key="index"
+                      :paper-id="key"
+                      :paper="paper"
+                      @showEditPaper="showEditModal($event.paperId)")
+            // 検索結果がないとき
+            p(v-if="search && !Object.keys(allPapersToDo).length && !Object.keys(allPapersCompleted).length")
+              | 検索結果  なし
         q-dialog(v-model="showAddPaper")
           add-paper(@close="showAddPaper = false")
       div.floating-action-button
         q-btn(round
-          @click="showAddPaper = true"
-          color="primary"
-          size="24px"
-          icon="add")
+              @click="showAddPaper = true"
+              color="primary"
+              size="24px"
+              icon="add")
       q-dialog(v-model="showEditPaper")
         edit-paper(:paper="editingPaper"
                   @close="showEditPaper = false"
@@ -69,11 +89,12 @@ export default {
     return {
       showAddPaper: false,
       showEditPaper: false,
-      editingPaperId: '', // 編集対象のPaperId
+      editingPaperId: '' // 編集対象のPaperId
     }
   },
   computed: {
-    ...mapGetters('papers', ['allPapersToDo', 'allPapersCompleted']),
+    ...mapGetters('papers', ['allPapers', 'allPapersToDo', 'allPapersCompleted']),
+    ...mapGetters('settings', ['settings']),
     ...mapState('papers', ['search']),
     editingPaper () {
       if (this.editingPaperId !== '') {
