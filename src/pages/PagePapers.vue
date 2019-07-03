@@ -5,41 +5,51 @@
         search
         sort
       .q-pa-md
-        // todo課題
-        div(v-if="Object.keys(allPapersToDo).length")
-          list-banner.corner-round(title="TODO" bg-class="bg-orange-5")
-          .row.justify-center
-            paper-card.q-ma-md(v-for="(paper, key, index) in allPapersToDo"
-                              :key="index"
-                              :paper-id="key"
-                              :paper="paper"
-                              @showEditPaper="showEditModal($event.paperId)")
-        // todoがないとき
-        no-papers(v-else-if="!search")
-        // 完了課題
-        div.q-mt-lg(v-if="Object.keys(allPapersCompleted).length")
-          list-banner.corner-round(title="完了" bg-class="bg-green-4")
-          .row.justify-center
-            paper-card.q-ma-md(v-for="(paper, key, index) in allPapersCompleted"
-                              :key="index"
-                              :paper-id="key"
-                              :paper="paper"
-                              @showEditPaper="showEditModal($event.paperId)")
-        // 検索結果がないとき
-        p(v-if="search && !Object.keys(allPapersToDo).length && !Object.keys(allPapersCompleted).length")
-          | 検索結果  なし
-      q-dialog(v-model="showAddPaper")
-        add-paper(@close="showAddPaper = false")
-    div.floating-action-button
-      q-btn(round
-        @click="showAddPaper = true"
-        color="primary"
-        size="24px"
-        icon="add")
-    q-dialog(v-model="showEditPaper")
-      edit-paper(:paper="editingPaper"
-                @close="showEditPaper = false"
-                :paper-id="editingPaperId")
+        // TODO 高さをレスポンシブにする
+        q-scroll-area(style="height: 750px;")
+          // todo課題
+          div(v-if="Object.keys(allPapersToDo).length")
+            transition(appear
+                      enter-active-class="animated zoomIn"
+                      leave-active-class="animated zoomOut")
+              div
+                list-banner.corner-round(title="TODO" bg-class="bg-orange-5")
+                .row.justify-center
+                  paper-card.q-ma-md(v-for="(paper, key, index) in allPapersToDo"
+                                  :key="index"
+                                  :paper-id="key"
+                                  :paper="paper"
+                                  @showEditPaper="showEditModal($event.paperId)")
+          // todoがないとき
+          no-papers(v-else-if="!search")
+          // 完了課題
+          div.q-mt-lg(v-if="Object.keys(allPapersCompleted).length")
+            transition(appear
+                        enter-active-class="animated zoomIn"
+                        leave-active-class="animated zoomOut")
+              div
+                list-banner.corner-round(title="完了" bg-class="bg-green-4")
+                .row.justify-center
+                  paper-card.q-ma-md(v-for="(paper, key, index) in allPapersCompleted"
+                                    :key="index"
+                                    :paper-id="key"
+                                    :paper="paper"
+                                    @showEditPaper="showEditModal($event.paperId)")
+          // 検索結果がないとき
+          p(v-if="search && !Object.keys(allPapersToDo).length && !Object.keys(allPapersCompleted).length")
+            | 検索結果  なし
+        q-dialog(v-model="showAddPaper")
+          add-paper(@close="showAddPaper = false")
+      div.floating-action-button
+        q-btn(round
+          @click="showAddPaper = true"
+          color="primary"
+          size="24px"
+          icon="add")
+      q-dialog(v-model="showEditPaper")
+        edit-paper(:paper="editingPaper"
+                  @close="showEditPaper = false"
+                  :paper-id="editingPaperId")
 </template>
 
 <script>
@@ -59,7 +69,7 @@ export default {
     return {
       showAddPaper: false,
       showEditPaper: false,
-      editingPaperId: '' // 編集対象のPaperId,
+      editingPaperId: '', // 編集対象のPaperId
     }
   },
   computed: {

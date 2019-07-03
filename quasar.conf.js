@@ -63,6 +63,7 @@ module.exports = function (ctx) {
         'QDate',
         'QPopupProxy',
         'QSelect',
+        'QScrollArea',
 
         // spinner
         'QSpinnerAudio',
@@ -132,7 +133,7 @@ module.exports = function (ctx) {
     },
 
     // animations: 'all', // --- includes all animations
-    animations: [],
+    animations: ['zoomIn', 'zoomOut'],
 
     ssr: {
       pwa: false

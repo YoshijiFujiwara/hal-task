@@ -1,31 +1,34 @@
 <template lang="pug">
-  q-card.paper-card
-    img(src='~/assets/paper.jpg' ref="img")
+  transition(appear
+            enter-active-class="animated zoomIn"
+            leave-active-class="animated zoomOut")
+    q-card.paper-card
+      img(src='~/assets/paper.jpg' ref="img")
 
-    p.subject-symbol-text(v-html="$options.filters.searchHighLight(paper.subjectSymbol, search)")
-    p.subject-number-text(v-html="$options.filters.searchHighLight(paper.subjectNumber, search)")
-    p.subject-theme-text(v-html="$options.filters.searchHighLight(paper.subjectTheme, search)")
-    p.delivery-year-text(v-html="$options.filters.searchHighLight(paper.deliveryDate.split('/')[0], search)")
-    p.delivery-month-text(v-html="$options.filters.searchHighLight(paper.deliveryDate.split('/')[1], search)")
-    p.delivery-date-text(v-html="$options.filters.searchHighLight(paper.deliveryDate.split('/')[2], search)")
-    p.subject-teacher-text(v-html="$options.filters.searchHighLight(paper.subjectTeacher, search)")
-    p.class-symbol-text-1 {{ paper.classSymbol1 }}
-    p.class-symbol-text-2 {{ paper.classSymbol2 }}
-    p.class-symbol-text-3 {{ paper.classSymbol3 }}
-    p.attendance-number-text {{ paper.attendanceNumber }}
-    p.option-class-symbol-text-1 {{ paper.optionClassSymbol1 }}
-    p.option-class-symbol-text-2 {{ paper.optionClassSymbol2 }}
-    p.option-class-symbol-text-3 {{ paper.optionClassSymbol3 }}
-    p.option-attendance-number-text {{ paper.optionAttendanceNumber }}
-    p.student-number-text {{ paper.studentNumber }}
-    p.my-name-text {{ paper.myName }}
-    p.homeroom-teacher-text {{ paper.homeroomTeacher }}
-    div.absolute-top.overlay(v-ripple
-                    :style="bgColorStyle"
-                    @click="updatePaper({ id: paperId, updates: { completed: !paper.completed }})")
-    q-card-actions(align='around')
-      q-btn(flat round color='primary', icon='edit' @click="$emit('showEditPaper', { paperId })")
-      q-btn(flat round color='red', icon='delete' @click="promptToDelete(paperId)")
+      p.subject-symbol-text(v-html="$options.filters.searchHighLight(paper.subjectSymbol, search)")
+      p.subject-number-text(v-html="$options.filters.searchHighLight(paper.subjectNumber, search)")
+      p.subject-theme-text(v-html="$options.filters.searchHighLight(paper.subjectTheme, search)")
+      p.delivery-year-text(v-html="$options.filters.searchHighLight(paper.deliveryDate.split('/')[0], search)")
+      p.delivery-month-text(v-html="$options.filters.searchHighLight(paper.deliveryDate.split('/')[1], search)")
+      p.delivery-date-text(v-html="$options.filters.searchHighLight(paper.deliveryDate.split('/')[2], search)")
+      p.subject-teacher-text(v-html="$options.filters.searchHighLight(paper.subjectTeacher, search)")
+      p.class-symbol-text-1 {{ paper.classSymbol1 }}
+      p.class-symbol-text-2 {{ paper.classSymbol2 }}
+      p.class-symbol-text-3 {{ paper.classSymbol3 }}
+      p.attendance-number-text {{ paper.attendanceNumber }}
+      p.option-class-symbol-text-1 {{ paper.optionClassSymbol1 }}
+      p.option-class-symbol-text-2 {{ paper.optionClassSymbol2 }}
+      p.option-class-symbol-text-3 {{ paper.optionClassSymbol3 }}
+      p.option-attendance-number-text {{ paper.optionAttendanceNumber }}
+      p.student-number-text {{ paper.studentNumber }}
+      p.my-name-text {{ paper.myName }}
+      p.homeroom-teacher-text {{ paper.homeroomTeacher }}
+      div.absolute-top.overlay(v-ripple
+                      :style="bgColorStyle"
+                      @click="updatePaper({ id: paperId, updates: { completed: !paper.completed }})")
+      q-card-actions(align='around')
+        q-btn(flat round color='primary', icon='edit' @click="$emit('showEditPaper', { paperId })")
+        q-btn(flat round color='red', icon='delete' @click="promptToDelete(paperId)")
 </template>
 
 <script>
